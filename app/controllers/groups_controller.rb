@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+before_action :authenticate_user! , only: [:new]
 # 使用GET
   #實作首頁
   def index
