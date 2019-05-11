@@ -1,17 +1,24 @@
 class GroupsController < ApplicationController
+# 使用GET
+  #實作首頁
   def index
     @groups = Group.all
   end
+  #各討論版專屬介面
   def show
     @group = Group.find(params[:id])
   end
-  def edit
-    @group = Group.find(params[:id])
-  end
+  #新增討論區用的'新增頁面'
   def new
     @group = Group.new
   end
+  #編輯討論區用的'編輯頁面'
+  def edit
+    @group = Group.find(params[:id])
+  end
 
+#使用POST
+  #產生討論區表單（資料）
   def create
     @group = Group.new(group_params)
     if @group.save
@@ -21,19 +28,26 @@ class GroupsController < ApplicationController
     end
   end
 
+#使用PUT
+  #更新討論區表單（資料）
   def update
     @group = Group.find(params[:id])
     if @group.update(group_params)
       redirect_to groups_path, notice: "Update Success"
     else
       render :edit
-    end  end
-def destroy
-  @group = Group.find(params[:id])
-  @group.destroy
-  flash[:alert] = "Group deleted"
-  redirect_to groups_path
-end
+    end
+  end
+
+#使用DELETE
+  #刪除討論區表單（資料）
+  def destroy
+    @group = Group.find(params[:id])
+    @group.destroy
+    flash[:alert] = "Group deleted"
+    redirect_to groups_path
+  end
+
   private
   def group_params
     params.require(:group).permit(:title, :description)
